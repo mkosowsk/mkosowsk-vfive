@@ -1,0 +1,39 @@
+# Simple Object Store Service
+
+## Running
+
+Clone the repo and run `npm install` then `node index.js`. Server will run on `localhost:3000`. 
+
+Use your favorite API platform to make requests (I prefer Postman).
+
+GET
+
+/objects
+
+Will respond with storage size for all objects per user in kilobyes
+
+/users/:id/objects/:version?
+
+Will get a given version of an object for a given user if version is specified. If version is not specified latest version will be returned.
+
+POST
+
+/users/:id/objects
+
+Will post an object to a given user. If a user already has that object it will not post.
+
+DELETE
+
+/users/:id/objects/:version?
+
+Will delete a given version of an object on a given user. If a version is not selected all objects for that user will be deleted.
+
+## Implementation
+
+I opted for a minimalist approach assuming a demo coming up with a short deadline. REST seemed appropriate for this implementation.
+
+With more time, TypeScript would be appropriate to have type checking to help eliminate bugs. I did add some guard clauses to check input but more could be added. Objects are never validated, a framework like Joi could help here.
+
+JavaScript does not have a native sizeof command like languages like C so I opted to pull in the "object-sizeof" package. Similarly checking if objects are equivalent is difficult in JavaScript so I used a lodash function here.
+
+Perhaps most importantly there is no ACL so anyone can access anyone else's data. Implementing this would be a high priority.
